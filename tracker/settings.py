@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
-from rest_framework.permissions import IsAdminUser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,7 +43,7 @@ INSTALLED_APPS = [
 ]
 # REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [IsAdminUser],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAdminUser',],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
