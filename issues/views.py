@@ -19,6 +19,8 @@ def get_delete_update_issue(request, pk):
 
     # update details of a single issue
     if request.method == 'PUT':
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         serializer = IssueSerializer(issue, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -27,6 +29,8 @@ def get_delete_update_issue(request, pk):
 
     # delete a single issue
     if request.method == 'DELETE':
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         issue.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -42,6 +46,9 @@ def get_post_issues(request):
 
     # insert a new record for a issue
     if request.method == 'POST':
+        if not request.user.is_superuser:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
         data = {
             'name': request.data.get('name'),
             'creator': request.data.get('creator'),
