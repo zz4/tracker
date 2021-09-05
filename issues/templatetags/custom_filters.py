@@ -19,7 +19,7 @@ def calculate_avg_max_min_duration(durations_list):
             str(min_duration).replace('days,', 'dnů a '))
 
 
-# Show issues statistics in header if user is logged in
+# Show issues statistics in header if user is logged in and is superuser or staff
 @register.filter
 def issues_statistics(request):
     issues = Issue.objects.exclude(finished_at__isnull=True)
