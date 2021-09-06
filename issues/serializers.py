@@ -81,3 +81,19 @@ class IssueSerializer(serializers.ModelSerializer):
                                          responsible_person=response_person, state=state_instance,
                                          category=category_instance, finished_at=finished_datetime, **validated_data)
         return new_issue
+
+    def update(self, instance, validated_data):
+        creator_instance = self.validate_instance_of_model_exists(User, validated_data.pop('creator_id'))
+        response_person = self.validate_instance_of_model_exists(User, validated_data.pop('responsible_person_id'))
+        state_instance = self.validate_instance_of_model_exists(State, validated_data.pop('state_id'))
+        instance.creator = self.validate_creator_is_superuser(creator_instance)
+        instance.responsible_person = response_person
+        instance.state = state_instance
+        instance.category = self.validate_instance_of_model_exists(Category, validated_data.pop('category_id'))
+        instance.finished_at = self.validate_finished_datetime(validated_data.pop('finished_at'),
+                                                               validated_data.get('created_at'), state_instance)
+        instance.name = validated_data.get('name')
+        instance.description = validated_data.get('description')
+        instance.created_at = validated_data.get('created_at')
+        instance.save()
+        return instance

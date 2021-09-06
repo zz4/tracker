@@ -22,7 +22,17 @@ def get_delete_update_issue(request, pk):
     if request.method == 'PUT':
         if not request.user.is_superuser:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        serializer = IssueSerializer(issue, data=request.data)
+        data = {
+            'name': request.data.get('name', issue.name),
+            'creator_id': request.data.get('creator_id', issue.creator.id),
+            'responsible_person_id': request.data.get('responsible_person_id', issue.responsible_person.id),
+            'description': request.data.get('description', issue.description),
+            'state_id': request.data.get('state_id', issue.state.id),
+            'category_id': request.data.get('category_id', issue.category.id),
+            'created_at': request.data.get('created_at', issue.created_at),
+            'finished_at': request.data.get('finished_at', issue.finished_at)
+        }
+        serializer = IssueSerializer(issue, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
