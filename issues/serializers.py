@@ -7,6 +7,24 @@ from .exceptions import IssueException
 from .models import Issue, Category, State
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'is_superuser', 'is_staff', 'is_active',)
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ('id', 'name',)
+
+
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = State
+        fields = ('id', 'name',)
+
+
 class IssueSerializer(serializers.ModelSerializer):
     creator_id = serializers.IntegerField()
     responsible_person_id = serializers.IntegerField()
@@ -15,8 +33,8 @@ class IssueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Issue
-        fields = ('name', 'creator_id', 'responsible_person_id', 'description', 'state_id', 'category_id', 'created_at',
-                  'finished_at',)
+        fields = ('id', 'name', 'creator_id', 'responsible_person_id', 'description', 'state_id', 'category_id',
+                  'created_at', 'finished_at',)
 
     # Check if model's instance with given pk exists
     @staticmethod
