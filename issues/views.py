@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Issue
 from .serializers import IssueSerializer
+
+from .models import Issue
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
@@ -44,18 +45,17 @@ def get_post_issues(request):
         serializer = IssueSerializer(issues, many=True)
         return Response(serializer.data)
 
-    # insert a new record for a issue
+    # insert a new record for an issue
     if request.method == 'POST':
         if not request.user.is_superuser:
             return Response(status=status.HTTP_403_FORBIDDEN)
-
         data = {
             'name': request.data.get('name'),
-            'creator': request.data.get('creator'),
-            'responsible_person': request.data.get('responsible_person'),
+            'creator_id': request.data.get('creator_id'),
+            'responsible_person_id': request.data.get('responsible_person_id'),
             'description': request.data.get('description'),
-            'state': request.data.get('state'),
-            'category': request.data.get('category'),
+            'state_id': request.data.get('state_id'),
+            'category_id': request.data.get('category_id'),
             'created_at': request.data.get('created_at'),
             'finished_at': request.data.get('finished_at')
         }
