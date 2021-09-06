@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 # REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAdminUser',],
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAdminUser', ],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
@@ -63,8 +63,7 @@ ROOT_URLCONF = 'tracker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
