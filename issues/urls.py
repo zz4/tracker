@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 from . import views
 
 
@@ -27,5 +28,6 @@ urlpatterns = [
         r'^api/v1/categories/$',
         views.get_all_categories,
         name='get_all_categories'
-    )
+    ),
+    path('', views.StartPage.as_view(), name='StartPage')
 ]

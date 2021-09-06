@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.views import View
+from django.http import HttpResponseRedirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -99,3 +101,9 @@ def get_all_categories(request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
+
+
+class StartPage(View):
+    @staticmethod
+    def get(request, *args, **kwargs):
+        return HttpResponseRedirect('/admin/issues/issue/')
